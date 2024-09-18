@@ -8,9 +8,9 @@ exports.auth = (req, res, next) => {
 };
 
 exports.errorMiddleware = (err, req, res, next) => {
-    console.log(`error- ${err.message}`);
+    console.log(`error: ${err.message}`);
     res.status(err.status || 500).json({
-      message: "An unexpected error occurred",
+      message: "An error occurred",
       error: err.message,
     });
   };
