@@ -1,5 +1,4 @@
 exports.auth = (req, res, next) => {
-  console.log("entered");
   if (req.url === "/no*") {
     res.send("No entry premitted");
   } else {
