@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Form Submission</title>
+  </head>
+  <body>
+    <h1>Submit Your Information</h1>
+    <form id="myForm">
+      <label for="name">Name:</label>
+      <input id="name" type="text" placeholder="Enter your name" required />
+
+      <label for="email">Email:</label>
+      <input id="email" type="email" placeholder="Enter your email" required />
+
+      <label for="age">Age:</label>
+      <input id="age" type="number" placeholder="Enter your age" required />
+
+      <button type="submit">Submit</button>
+    </form>
+    <hr />
+    <div>
+      <h4 id="response"></h4>
+      <div id="resName"></div>
+      <div id="resEmail"></div>
+      <div id="resAge"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const age = document.getElementById("age").value;
+
+          const formData = `name=${encodeURIComponent(
+            name
+          )}&email=${encodeURIComponent(email)}&age=${encodeURIComponent(age)}`;
+
+          fetch("http://localhost:3005/form", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              const { name, email, age } = data.data;
+              document.getElementById(
+                "response"
+              ).textContent = `${data.message}`;
+              document.getElementById("resName").textContent = `Name: ${name}`;
+              document.getElementById(
+                "resEmail"
+              ).textContent = `Email: ${email}`;
+              document.getElementById("resAge").textContent = `Age: ${age}`;
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+  </body>
+</html>

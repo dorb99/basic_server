@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h2>Welcome and please enter your wanted requests</h2>
+    <form id="urlForm">
+      <label>Insert data</label>
+      <select id="method">
+        <option value="GET">Get</option>
+        <option value="POST">Post</option>
+        <option value="PUT">Put</option>
+        <option value="DELETE">Delete</option>
+      </select>
+      <input id="urlInput" type="text" placeholder="Input wanted url"></input>
+      <input id="body" type="text" placeholder="Input body"></input>
+
+      <button type="submit">Submit</button>
+    </form>
+      
+    <hr/>
+    <div id="responseData">
+
+    </div>
+    <script>
+      document
+        .getElementById("urlForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const methodInput = document.getElementById("method").value;
+          const urlInput = document.getElementById("urlInput").value;
+          const bodyInput = document.getElementById("body").value;
+          
+          let bodyObject = {};
+            if (bodyInput) {
+                bodyInput.split(',').forEach(pair => {
+                    const [key, value] = pair.split(':').map(item => item.trim());
+                    if (key && value) {
+                        bodyObject[key] = parseFloat(value);
+                    }
+                });
+            }
+
+          fetch(`http://localhost:3005/${urlInput}`, {
+            method: methodInput,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: methodInput !== "GET" ? JSON.stringify(bodyObject) : null
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              document.getElementById("responseData").textContent = data;
+            })
+            .catch((error) => {
+              console.error("Error:", error)
+              document.getElementById("responseData").textContent = error.message   
+        });
+        });
+    </script>
+  </body>
+</html>
