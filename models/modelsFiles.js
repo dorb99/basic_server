@@ -16,10 +16,10 @@ const userSchema = new Schema({
     maxlength: [30, "Username must be less than 30 characters long"],
     unique: true,
     validate: {
-      validator: function (value) {
-        return validationPatterns.username.test(value);
+      validator: function (inputedUsername) {
+        return validationPatterns.username.test(inputedUsername);
       },
-      message: "Username must be alphanumeric and between 3-30 characters.",
+      message: "Username must be alphanumeric.",
     },
   },
   email: {
