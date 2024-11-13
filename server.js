@@ -79,7 +79,7 @@ app.post("/form", formSubmit);
 app.use(errorMiddleware);
 app.use("*", wrongTurn);
 
-app.listen(PORT || process.env.PORT, (err) => {
+app.listen( process.env.PORT, (err) => {
   if (err) {
     serverErrors(err);
   } else {
