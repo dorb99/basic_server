@@ -47,9 +47,9 @@ app.use(express.static("public"));
 // app.use("/newcookie", newCookie);
 // app.use("/*", cookieAuth);
 
-// // JWT
-// app.use("/newjwt", newJwt);
-// app.use("/*", jwtAuth);
+// JWT
+app.use("/newjwt", newJwt);
+app.use("/*", jwtAuth);
 
 // // Sessions
 // const time = 60 * 60 * 1000;
@@ -64,6 +64,9 @@ app.use(express.static("public"));
 // app.use("/newsession", newSession);
 // app.use("/*", sessionAuth);
 
+app.get("/error", (req, res)=>{
+  res.sendFile("./public/error.html")
+})
 
 app.use("/math", mathRoutes);
 app.use("/logs", logsRoutes);
@@ -76,7 +79,7 @@ app.post("/form", formSubmit);
 app.use(errorMiddleware);
 app.use("*", wrongTurn);
 
-app.listen(process.env.PORT, (err) => {
+app.listen(PORT || process.env.PORT, (err) => {
   if (err) {
     serverErrors(err);
   } else {

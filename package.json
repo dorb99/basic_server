@@ -1,4 +1,8 @@
 {
+  "scripts":{
+    "start": "nodemon server.js",
+    "initDB": "node config/db/startDb.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
